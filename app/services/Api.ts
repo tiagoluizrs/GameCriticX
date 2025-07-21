@@ -1,39 +1,28 @@
 import axios from "axios";
 
-type MediaType = "movie" | "tv";
-
 const axios_api = axios.create({
-    baseURL: "https://rawg.io/apidocs",
+    baseURL: "https://api.rawg.io/api",
     headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_RAWG_TOKEN}`,
         Accept: "application/json",
     },
     params: {
-        language: "pt-BR",
+        key: import.meta.env.VITE_RAWG_TOKEN,
     },
 });
 
 export const ApiService = {
-    getPopulars: async (type: MediaType) => {
-        const response = await axios_api.get(`/${type}/popular`, {
-            params: { page: 1 },
-        });
-        return response.data;
-    },
-    search: async (type: MediaType, query: string) => {
-        const response = await axios_api.get(`/search/${type}`, {
+    search: async (search: string, page: number, page_size: number) => {
+        const response = await axios_api.get(`/games`, {
             params: {
-                query,
-                page: 1,
-                include_adult: true,
+                search,
+                page,
+                page_size, // Adjust page size as needed
             },
         });
         return response.data;
     },
-    getDetails: async (type: MediaType, id: number) => {
-        console.log(type);
-        console.log(id);
-        const response = await axios_api.get(`/${type}/${id}`);
+    getGameDetails: async (id: string) => {
+        const response = await axios_api.get(`/games/${id}`);
         return response.data;
     },
 };

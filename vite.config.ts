@@ -7,6 +7,6 @@ export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   server: {
     host: "0.0.0.0",
-    allowedHosts: [process.env["REPLIT_DOMAINS"].split(",")[0]],
+    // allowedHosts: [process.env["REPLIT_DOMAINS"].split(",")[0]],
   },
 });
